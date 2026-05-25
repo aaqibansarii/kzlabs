@@ -28,9 +28,11 @@ Report Name
 
 1. Navigate to the following page:
 
+Login to your account.
 ```http
 https://kzlabs.com/60.php
 ```
+
 
 2. Click on **New Network Report**.
 
