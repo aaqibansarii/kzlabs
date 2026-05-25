@@ -24,8 +24,17 @@ internalSearchTerm: ""+alert("xicorr55.php")+"",
 
 This confirms that user input is embedded directly into executable JavaScript code.
 
-📌 **Add Screenshot #1 here**
-(Show the alert popup triggered after visiting the crafted URL)
+<div align="center">
+
+### Screenshot 1 — Payload Reflected Inside JavaScript Context
+
+<img src="./xss-screenshots/55-Parm-inject.png" width="85%">
+
+<br><br>
+
+<em>User-controlled input reflected directly inside the JavaScript context without sanitization.</em>
+
+</div>
 
 ---
 
@@ -57,8 +66,6 @@ https://kzlabs.com/55.php?search=%22%2Balert(%22xicorr55.php%22)%2B%22
 
 4. Notice that the payload is reflected directly inside a JavaScript object without any sanitization.
 
-📌 **Add Screenshot #2 here**
-(Show the vulnerable URL with the alert execution)
 
 ---
 
@@ -85,8 +92,17 @@ window.onload = function(e) {
 
 Because the payload breaks out of the intended string context, arbitrary JavaScript executes successfully in the victim’s browser.
 
-📌 **Add Screenshot #3 here**
-(Show page source / DevTools highlighting the vulnerable JavaScript reflection)
+<div align="center">
+
+### Screenshot 2 — Alert Popup Triggered
+
+<img src="./xss-screenshots/55-alert-popup.png" width="85%">
+
+<br><br>
+
+<em>Payload execution successfully triggers a JavaScript alert.</em>
+
+</div>
 
 ---
 
