@@ -70,19 +70,18 @@ window.onload = function(e) {
 
 ## Impact
 
-An attacker can exploit this vulnerability to:
+An attacker can perform the following actions using this vulnerability:
 
-- Hijack authenticated user sessions
-- Potentially achieve account takeover
-- Perform unauthorized actions within the application
-- Exfiltrate sensitive user data
-- Execute arbitrary JavaScript in the victim’s browser context
-
+- It allows attackers to hijack user sessions.
+- It potentially leads to full account takeover.
+- It allows attackers to perform unauthorized actions within the vulnerable application.
+- It allows attackers to exfiltrate sensitive data.
 
 ## Recommendations for Fix
 
-- Properly sanitize and encode all user-controlled input before rendering it inside JavaScript contexts
-- Avoid directly embedding user input inside `<script>` blocks
-- Use safe serialization methods such as `JSON.stringify()`
-- Apply contextual output encoding (e.g., `htmlspecialchars()` in PHP where appropriate)
-- Implement a strict Content Security Policy (CSP) to reduce XSS impact
+Validate and sanitize the redirectUrl parameter to ensure that it does not contain any malicious content. This can be done by:
+
+- Filter out HTML tags like: `<script>`, `<img>`, `<svg>` from the Report Name field before saving anything to the database
+- Filter out JavaScript methods like: `alert()`, `confirm()`, `prompt()` so even if a tag slips through the method won't execute
+- If you're using PHP then use `htmlspecialchars()` function before rendering any user input back to the page
+- Use Cloudflare as they have so many WAF rules that almost all XSS payloads will be blocked automatically before even reaching the server
