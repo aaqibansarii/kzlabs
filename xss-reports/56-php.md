@@ -64,7 +64,7 @@ The injected payload breaks out of the original `data-query` attribute and injec
 
 ### Screenshot — Confirmation Popup Triggered
 
-<img width="1920" height="470" alt="image" src="https://github.com/user-attachments/assets/006712d3-5553-4896-9bee-3579fe3371fb" />
+<img width="1920" height="474" alt="image" src="https://github.com/user-attachments/assets/0da03619-7021-4ef0-aac5-4b7afaf69908" />
 
 
 ## Impact
