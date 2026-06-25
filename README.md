@@ -1,33 +1,54 @@
 # KZLabs - Security Research Repository
 
-A personal repository for documenting and organizing vulnerability research, bug bounty findings, proof-of-concepts, and penetration testing notes related to KrazePlanet (KZLabs).
+A personal repository for documenting vulnerability research, proof-of-concepts (PoCs), penetration testing notes, and security findings from KZLabs.
 
----
+## Repository Structure
 
-## Scope
+This repository is organized by vulnerability category for easy navigation and reference.
 
-This repository contains security research reports including but not limited to:
+Current research includes:
 
-- Cross-Site Scripting (XSS)
+* Cross-Site Scripting (XSS)
+* Server-Side Request Forgery (SSRF)
+* Cross-Site Request Forgery (CSRF)
+* Local File Inclusion (LFI)
+* Remote Code Execution (RCE)
+* Insecure Direct Object Reference (IDOR)
+* XML External Entity (XXE)
+* Special Vulnerabilities
 
----
+Each report contains technical details, proof-of-concepts, payloads (where applicable), screenshots, and remediation recommendations.
+
+## Purpose
+
+This repository serves as a centralized knowledge base for:
+
+* Security research documentation
+* Vulnerability write-ups
+* Proof-of-concept demonstrations
+* Bug bounty learning and practice
+* Penetration testing notes
+
+## Repository Layout
+
+```text
+kzlabs/
+├── xss-reports/
+├── ssrf-reports/
+├── csrf-reports/
+├── lfi-reports/
+├── rce-reports/
+├── idor-reports/
+├── xxe-reports/
+└── special-vulnerabilities/
+```
 
 ## Disclaimer
 
-All testing and research documented in this repository are performed under authorized and ethical security testing practices.
+All research documented in this repository was performed in authorized environments intended for security testing and educational purposes.
 
-This repository is intended for:
-- Educational Purposes
-- Security Research
-- Vulnerability Documentation
-- Responsible Disclosure Tracking
-
-Unauthorized testing against systems without permission is strictly prohibited.
-
----
+This repository is maintained for documentation, learning, and responsible security research only.
 
 ## Researcher
 
-GitHub: https://github.com/aaqibansarii
-
----
+**GitHub:** https://github.com/aaqibansarii
